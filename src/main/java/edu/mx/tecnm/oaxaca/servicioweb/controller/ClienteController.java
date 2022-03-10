@@ -1,4 +1,3 @@
-
 package edu.mx.tecnm.oaxaca.servicioweb.controller;
 
 import edu.mx.tecnm.oaxaca.servicioweb.model.ClienteModel;
@@ -29,7 +28,7 @@ public class ClienteController {
         return customResponse;
     }
     
-    @GetMapping("/")
+    @GetMapping("/show")
     public CustomResponse getClientes(){
     
         CustomResponse customResponse = new CustomResponse();
