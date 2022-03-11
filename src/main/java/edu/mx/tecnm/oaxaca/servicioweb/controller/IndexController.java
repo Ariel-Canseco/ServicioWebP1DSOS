@@ -45,6 +45,10 @@ public class IndexController {
         return "<h1>Holis soy tu servidor en Spring :P</h1>";
     }
     
+    @GetMapping("/ParaMiPersonaFavorita") //Llamada a raiz (dominio princiapl)
+    public String hani(){
+        return "<h1>Si quiero que vayas, pero te quiero dedicar el tiempo que te mereces y no solo ratos esporádicos. \"♥\"</h1>";
+    }
     /*
     
     @GetMapping("/ParaMiPersonaFavorita") //Llamada a raiz (dominio princiapl)

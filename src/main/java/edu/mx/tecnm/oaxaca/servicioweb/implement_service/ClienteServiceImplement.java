@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author maste
+ * @author Jester
  */
 @Service
 public class ClienteServiceImplement implements ClienteService{
@@ -32,4 +32,25 @@ public class ClienteServiceImplement implements ClienteService{
         return clienteRepository.findAll();
     }
     
+    //Que busque por rfc
+    /*
+    @Override
+    public ClienteModel getCliente(String rfc){
+    
+        return clienteRepository.findByRFC(rfc);
+    }
+
+    @Override
+    public void updateCliente(ClienteModel clienteModel, Integer idCliente) {
+    
+        clienteModel.setIdCliente(idCliente);
+        clienteRepository.save(clienteModel);
+    }
+    */
+
+    @Override
+    public void deleteCliente(Integer idCliente) {
+        clienteRepository.deleteById(idCliente);
+    }
+
 }
