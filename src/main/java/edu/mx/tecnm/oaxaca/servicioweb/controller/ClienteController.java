@@ -4,6 +4,7 @@ import edu.mx.tecnm.oaxaca.servicioweb.model.ClienteModel;
 import edu.mx.tecnm.oaxaca.servicioweb.repository.ClienteRepository;
 import edu.mx.tecnm.oaxaca.servicioweb.service.ClienteService;
 import edu.mx.tecnm.oaxaca.servicioweb.utils.CustomResponse;
+import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping(path="/api/v1/cliente")
+@CrossOrigin(origins="*")//"http://127.0.0.1:5500" or "*"
 public class ClienteController {
     
     private ClienteRepository clienteRepository;
@@ -42,11 +44,13 @@ public class ClienteController {
     }
     
     @GetMapping("/show")
-    public CustomResponse getClientes(){
+    public List<ClienteModel> getClientes(){
     
-        CustomResponse customResponse = new CustomResponse();
+        /*CustomResponse customResponse = new CustomResponse();
         customResponse.setDato(clienteService.getClientes());
-        return customResponse;
+        return customResponse;*/
+        
+        return clienteService.getClientes();
     }
     
     @Transactional
