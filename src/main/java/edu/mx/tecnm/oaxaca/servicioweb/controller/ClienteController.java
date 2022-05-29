@@ -35,13 +35,13 @@ public class ClienteController {
         this.clienteRepository = clienteRepository;
     }
     
-    
+   /* 
     @PostMapping("/")
     public CustomResponse createCliente(@RequestBody ClienteModel clienteModel){
         CustomResponse customResponse= new CustomResponse();
         clienteService.createCliente(clienteModel);
         return customResponse;
-    }
+    }*/
     
     @GetMapping("/show")
     public List<ClienteModel> getClientes(){
@@ -53,10 +53,20 @@ public class ClienteController {
         return clienteService.getClientes();
     }
     
+    @PostMapping("/")
+    public ResponseEntity<ClienteModel> createCliente(@RequestBody ClienteModel clienteModel){
+        ClienteModel cliente = clienteRepository.save(clienteModel);
+        if(clienteModel == null)
+        
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(cliente, HttpStatus.CREATED);
+        
+    }
+    
     @Transactional
     @PutMapping("/{idCliente}")
     public ResponseEntity<ClienteModel> put(@PathVariable String idCliente,
-            @ModelAttribute ClienteModel cliente){
+            @RequestBody ClienteModel cliente){
         ClienteModel clienteModel = clienteRepository.findById(Integer.parseInt(idCliente))
                 .orElseThrow(() -> new IllegalStateException("El cliente no existe"));
         clienteModel.setNombre(cliente.getNombre());
@@ -67,21 +77,38 @@ public class ClienteController {
         return new ResponseEntity<>(clienteModel, HttpStatus.OK);
     }
     
+    /*@DeleteMapping("/delete/{id_cliente}")
+    public ResponseEntity<ClienteModel> delete(@PathVariable String idCliente){
+             return new ResponseEntity<>(null, HttpStatus.OK);
+        try{
+        clienteRepository.deleteById(Integer.parseInt(idCliente));
+        //ClienteModel clienteModel = clienteRepository.deleteById(Integer.parseInt(idCliente));
+        return new ResponseEntity<>(null, HttpStatus.OK);
+        }catch(Exception e){
+            System.out.println(e);
+                    return new ResponseEntity<>(null, HttpStatus.OK);
+
+        }
+        
+    }*/
+    
+    @CrossOrigin
+    @DeleteMapping("/delete/{idCliente}")
+    public ResponseEntity<ClienteModel> delete(@PathVariable String idCliente){
+        System.out.println("Sext");
+        //ClienteModel cliente = clienteService.deleteCliente(Integer.parseInt(idCliente))
+                //.orElseThrow(() -> new IllegalStateException("Error al obtener el cliente"));
+        clienteService.deleteCliente(Integer.parseInt(idCliente));
+        //cliente.setPaymentStatus('D');
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+    /*
     @DeleteMapping("/delete/{idCliente}")
     public CustomResponse deleteCliente(@PathVariable Integer idCliente){
     
         CustomResponse customResponse = new CustomResponse();
         clienteService.deleteCliente(idCliente);
         return customResponse;
-    }
-/*
-    @DeleteMapping("/delete/{id_cliente}")
-    public ResponseEntity<ClienteModel> delete(@PathVariable String idCliente){
-        clienteRepository.deleteById(Integer.parseInt(idCliente));
-        //ClienteModel clienteModel = clienteRepository.deleteById(Integer.parseInt(idCliente));
-        return new ResponseEntity<>(null, HttpStatus.OK);
-    }
-   */
-
+    }*/
 
 }
