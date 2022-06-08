@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path="/api/v1/cliente")
 @CrossOrigin(origins="*")//"http://127.0.0.1:5500" or "*"
 public class ClienteController {
-    
+    @Autowired
     private ClienteRepository clienteRepository;
     @Autowired
     private ClienteService clienteService;
@@ -53,6 +53,14 @@ public class ClienteController {
         return clienteService.getClientes();
     }
     
+    // get client by id
+    @GetMapping("/show/{idCliente}")
+    public ResponseEntity<ClienteModel> getClientById(@PathVariable String idCliente){
+        ClienteModel cliente = clienteRepository.findById(Integer.parseInt(idCliente))
+                .orElseThrow(() -> new IllegalStateException("Cliente no existe con el id: "+ idCliente));
+        return new ResponseEntity<>(cliente, HttpStatus.OK);
+    }
+    
     @PostMapping("/")
     public ResponseEntity<ClienteModel> createCliente(@RequestBody ClienteModel clienteModel){
         ClienteModel cliente = clienteRepository.save(clienteModel);
@@ -75,6 +83,20 @@ public class ClienteController {
         clienteModel.setRfc(cliente.getRfc());
         clienteRepository.save(clienteModel);
         return new ResponseEntity<>(clienteModel, HttpStatus.OK);
+    }
+    
+    @PutMapping("/update/{idCliente}")
+    public ResponseEntity<ClienteModel> updateCliente(@PathVariable Integer idCliente, @RequestBody ClienteModel clienteModel){
+        ClienteModel cliente = clienteRepository.findById(idCliente)
+                .orElseThrow(() -> new IllegalStateException("Cliente no existe con el id : "+idCliente));
+        
+               cliente.setNombre(clienteModel.getNombre());
+        cliente.setPrimerApellido(clienteModel.getPrimerApellido());
+        cliente.setSegundoApellido(clienteModel.getSegundoApellido());
+        cliente.setRfc(clienteModel.getRfc());
+        ClienteModel updatedCliente = clienteRepository.save(cliente);
+        return ResponseEntity.ok(updatedCliente);
+        
     }
     
     /*@DeleteMapping("/delete/{id_cliente}")
