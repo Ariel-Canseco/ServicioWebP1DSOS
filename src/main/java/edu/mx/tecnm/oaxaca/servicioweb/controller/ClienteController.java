@@ -84,7 +84,7 @@ public class ClienteController {
         clienteRepository.save(clienteModel);
         return new ResponseEntity<>(clienteModel, HttpStatus.OK);
     }
-    @CrossOrigin
+
     @PutMapping("/update/{idCliente}")
     public ResponseEntity<ClienteModel> updateCliente(@PathVariable Integer idCliente, @RequestBody ClienteModel clienteModel){
         ClienteModel cliente = clienteRepository.findById(idCliente)

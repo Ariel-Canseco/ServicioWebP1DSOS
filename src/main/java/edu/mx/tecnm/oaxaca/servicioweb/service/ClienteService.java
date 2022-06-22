@@ -18,6 +18,6 @@ public interface ClienteService {
     public void createCliente(ClienteModel cliente);
     public List getClientes();
     //public ClienteModel getCliente(String rfc);
-    //public void updateCliente(ClienteModel clienteModel, Integer idCliente);
+    public void updateCliente(ClienteModel clienteModel, Integer idCliente);
     public void deleteCliente(Integer idCliente);
 }

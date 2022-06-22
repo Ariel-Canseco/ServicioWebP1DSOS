@@ -47,6 +47,13 @@ public class ClienteServiceImplement implements ClienteService{
         clienteRepository.save(clienteModel);
     }
     */
+    
+    @Override
+    public void updateCliente(ClienteModel clienteModel, Integer idCliente) {
+    
+        clienteModel.setIdCliente(idCliente);
+        clienteRepository.save(clienteModel);
+    }
 
     @Override
     public void deleteCliente(Integer idCliente) {
